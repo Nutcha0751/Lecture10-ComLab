@@ -21,7 +21,7 @@ export default function UserCard({ name, imgUrl, address, email }: UserCardProps
         {/* toggle chevron icon accordingly */}
         {isDetailShown ? <IconChevronUp /> : <IconChevronDown />}
       </div>
-      {/* display UserCardDetail accordingly */}
+      {/* display UserCardDetail accordingly (การแสดงผลตามเงื่อนไข: ใช้ isDetailShown เพื่อกำหนดว่า UserCardDetail ควรแสดงหรือไม่)*/}
       {isDetailShown && <UserCardDetail email = {email} address = {address} />}
     </div>
   );
