@@ -5,21 +5,39 @@ import Header from "@/components/Header";
 import Task from "@/components/Task";
 import TaskInput from "@/components/TaskInput";
 import { nanoid } from "nanoid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { TaskType } from "@/libs/types";
+//import { TaskType } from "@/libs/types";
+import { TaskProps } from "@/libs/types";
 
 export default function Todolist() {
   //tasks = array of {id: string, title: string, complete: boolean}
-  const [tasks, setTasks] = useState<TaskType[]>([]);
+  const [tasks, setTasks] = useState<TaskProps[]>([]);
 
   //create 1st load state variable
+  const [isLoading, setIsLoading] = useState(true); //เป็นการ load ครั้งแรกใช่ไหม
 
   //add useEffect runs at first and after tasks is updated
+  useEffect(() => { //(ใช้เพื่อตรวจสอบการเปลี่ยนแปลงของ tasks และบันทึกลงใน localStorage.)
+    if(isLoading){ //เป็นการช่วยเก็บข้อมูลเวลารีหน้า page
+      setIsLoading(false);
+      return;
+    };
+    const jsonStr = JSON.stringify(tasks);
+    localStorage.setItem("tasks", jsonStr);
+  },[tasks]);
+  
+  useEffect(() => { //(ใช้เพื่อโหลดข้อมูล tasks ที่เก็บไว้ใน localStorage เมื่อหน้าเพจถูกโหลดขึ้นมาใหม่ เพื่อให้แน่ใจว่าผู้ใช้จะเห็นข้อมูล tasks ล่าสุดแม้ว่ารีเฟรชหน้าเพจ.)
+    const jsonStr = localStorage.getItem("tasks");
+    if(jsonStr !== null){
+      const newTask = JSON.parse(jsonStr);
+      setTasks(newTask);
+    };
+  },[]);
 
   // add new task with specified title
   const addTask = (newTaskTitle: string) => {
-    const newTask = { id: nanoid(), title: newTaskTitle, completed: false };
+    const newTask:TaskProps = { id: nanoid(), title: newTaskTitle, completed: false };
     const newTasks = [...tasks, newTask];
     setTasks(newTasks);
   };
@@ -33,7 +51,7 @@ export default function Todolist() {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   };
 
-  const toggleDoneTask = (taskId: string) => {
+  const toggleDoneTask = (taskId: string) => { //ขีดเส้นว่าอันไหนทำแล้ว
     //structuredClone will copy an array or an object "deeply"
     //So objects within an object will be copied too
     const newTasks = structuredClone(tasks);

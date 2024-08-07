@@ -1,10 +1,12 @@
+import { TaskProps } from "@/libs/types";
+
 export default function Task({
   id,
   title,
   completed,
   deleteTaskFunc,
   toggleDoneTaskFunc,
-}) {
+}: TaskProps) {
   const deleteBtnOnClick = () => {
     if (deleteTaskFunc !== undefined) {
       deleteTaskFunc(id);

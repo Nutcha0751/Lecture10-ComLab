@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { TaskInputProps } from "@/libs/types";
 
-export default function TaskInput({ addTaskFunc }) {
+export default function TaskInput({ addTaskFunc }: TaskInputProps) {
   const [taskInput, setTaskInput] = useState("");
 
   const addTaskBtnOnClick = () => {

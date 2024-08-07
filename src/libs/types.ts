@@ -14,9 +14,23 @@ interface FooterProps {
 }
 export type { FooterProps };
 
-interface TaskInputProps {}
+interface TaskInputProps {
+  addTaskFunc: (title: string) => void;
+}
 export type { TaskInputProps };
 
 // add UserCardDetailProps
+interface UserCardDetailProps{
+  email: string;
+  address: string;
+}
+export type { UserCardDetailProps };
 
 // add UserCardProps
+interface UserCardProps {
+  name: string;
+  email: string;
+  imgUrl: string;
+  address: string;
+}
+export type { UserCardProps };
