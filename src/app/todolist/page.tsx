@@ -25,7 +25,7 @@ export default function Todolist() {
     };
     const jsonStr = JSON.stringify(tasks);
     localStorage.setItem("tasks", jsonStr);
-  },[tasks]);
+  },[tasks]); //ตัวแรกหรือก่อน , คือ callback ส่วนหลัง , คือ array
   
   useEffect(() => { //(ใช้เพื่อโหลดข้อมูล tasks ที่เก็บไว้ใน localStorage เมื่อหน้าเพจถูกโหลดขึ้นมาใหม่ เพื่อให้แน่ใจว่าผู้ใช้จะเห็นข้อมูล tasks ล่าสุดแม้ว่ารีเฟรชหน้าเพจ.)
     const jsonStr = localStorage.getItem("tasks");
@@ -83,7 +83,7 @@ export default function Todolist() {
 
         {/* tasks mapping*/}
         {tasks.map((task) => (
-          <Task
+          <Task //สิ่งที่จะแสดงขึ้นมา
             id={task.id}
             title={task.title}
             deleteTaskFunc={deleteTask}
